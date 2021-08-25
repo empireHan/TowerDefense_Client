@@ -35,6 +35,10 @@ namespace Flower
 
             GameEntry.Event.Subscribe(Constant.EventDefine.ConnectGateServer, OnConnectGateServer);
 
+            GameEntry.Event.Subscribe(Constant.EventDefine.RegisterNotify, OnRegisterNotify);
+
+            GameEntry.Event.Subscribe(Constant.EventDefine.LoginGateSuccessNotify, OnLoginGateSuccess);
+
 
             TestConnect();
 
@@ -46,6 +50,8 @@ namespace Flower
 
             GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnConnected);
             GameEntry.Event.Unsubscribe(Constant.EventDefine.ConnectGateServer, OnConnectGateServer);
+            GameEntry.Event.Unsubscribe(Constant.EventDefine.RegisterNotify, OnRegisterNotify);
+            GameEntry.Event.Unsubscribe(Constant.EventDefine.LoginGateSuccessNotify, OnLoginGateSuccess);
         }
 
         void TestConnect()
@@ -104,6 +110,28 @@ namespace Flower
 
             IPEndPoint ipPoint = NetworkHelper.ToIPEndPoint(loginResult.Address);
             nc.Connect(ipPoint.Address, ipPoint.Port, loginResult);
+        }
+
+        void OnRegisterNotify(object sender,EventArgs e)
+        {
+            R2C_Register registerResult = sender as R2C_Register;
+            if(registerResult == null)
+            {
+                return;
+            }
+            if(registerResult.Error != ErrorCode.ERR_Success)
+            {
+                Debug.Log($"Register failed! {registerResult.Message}");
+                return;
+            }
+            Debug.Log($"Register success! {registerResult.Message}");
+        }
+
+        void OnLoginGateSuccess(object sender, EventArgs e)
+        {
+            G2C_LoginGate loginGate = sender as G2C_LoginGate;
+            //跳转UI   
+            GameEntry.Event.Fire(this, ChangeSceneEventArgs.Create(GameEntry.Config.GetInt("Scene.Menu")));
         }
 
         private void OnRegisterButtonClick()

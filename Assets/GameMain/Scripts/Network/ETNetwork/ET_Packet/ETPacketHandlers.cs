@@ -14,6 +14,34 @@ namespace Flower
 
     }
 
+    public partial class R2C_RegisterHandler : PacketHandlerBase
+    {
+        public override int Id
+        {
+            get
+            {
+                return 10014;
+            }
+        }
+
+        R2C_Register r2c_Register;
+        public override void Handle(object sender, Packet packet)
+        {
+            Debug.Log("Get Message From the Server for Register");
+            R2C_Register registerResult = packet as R2C_Register;
+            r2c_Register = registerResult;
+            //NetworkComponent network = MGame.GameEntry.Network;
+            //INetworkChannelHelper helper = new ET_NetworkChannelHelper();
+            //INetworkChannel nc = network.CreateNetworkChannel("CG_TC", helper);
+            //nc.HeartBeatInterval = 0f;
+
+            //IPEndPoint ipPoint = NetworkHelper.ToIPEndPoint(loginResult.Address);
+            //nc.Connect(ipPoint.Address, ipPoint.Port,r2c_Login);
+            GameEntry.Event.Fire(r2c_Register, new MGameEvetArgs(Constant.EventDefine.RegisterNotify));
+        }
+
+    }
+
     public partial class R2C_LoginHandler : PacketHandlerBase
     {
         public override int Id
@@ -63,6 +91,7 @@ namespace Flower
             {
                 Debug.Log(string.Format("Message:{0},PlayerId:{1}", result.Message, result.PlayerId));
             }
+            GameEntry.Event.Fire(result, new MGameEvetArgs(Constant.EventDefine.LoginGateSuccessNotify));
         }
     }
 
