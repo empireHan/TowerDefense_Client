@@ -1200,6 +1200,192 @@ namespace Flower {
 
   }
 
+  public partial class LevelConfig : pb::IMessage {
+    private static readonly pb::MessageParser<LevelConfig> _parser = new pb::MessageParser<LevelConfig>(() => (LevelConfig)MessagePool.Instance.Fetch(typeof(LevelConfig)));
+    public static pb::MessageParser<LevelConfig> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private int levelIndex_;
+    public int LevelIndex {
+      get { return levelIndex_; }
+      set {
+        levelIndex_ = value;
+      }
+    }
+
+    private string config_ = "";
+    public string Config {
+      get { return config_; }
+      set {
+        config_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+      if (LevelIndex != 0) {
+        output.WriteRawTag(216, 5);
+        output.WriteInt32(LevelIndex);
+      }
+      if (Config.Length != 0) {
+        output.WriteRawTag(226, 5);
+        output.WriteString(Config);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (LevelIndex != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(LevelIndex);
+      }
+      if (Config.Length != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(Config);
+      }
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      rpcId_ = 0;
+      levelIndex_ = 0;
+      config_ = "";
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+          case 728: {
+            LevelIndex = input.ReadInt32();
+            break;
+          }
+          case 738: {
+            Config = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public partial class R2C_LevelConfig : pb::IMessage {
+    private static readonly pb::MessageParser<R2C_LevelConfig> _parser = new pb::MessageParser<R2C_LevelConfig>(() => (R2C_LevelConfig)MessagePool.Instance.Fetch(typeof(R2C_LevelConfig)));
+    public static pb::MessageParser<R2C_LevelConfig> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private int error_;
+    public int Error {
+      get { return error_; }
+      set {
+        error_ = value;
+      }
+    }
+
+    private string message_ = "";
+    public string Message {
+      get { return message_; }
+      set {
+        message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    private static readonly pb::FieldCodec<global::Flower.LevelConfig> _repeated_levelConfigs_codec
+        = pb::FieldCodec.ForMessage(746, global::Flower.LevelConfig.Parser);
+    private pbc::RepeatedField<global::Flower.LevelConfig> levelConfigs_ = new pbc::RepeatedField<global::Flower.LevelConfig>();
+    public pbc::RepeatedField<global::Flower.LevelConfig> LevelConfigs {
+      get { return levelConfigs_; }
+      set { levelConfigs_ = value; }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+      if (Error != 0) {
+        output.WriteRawTag(216, 5);
+        output.WriteInt32(Error);
+      }
+      if (Message.Length != 0) {
+        output.WriteRawTag(226, 5);
+        output.WriteString(Message);
+      }
+      levelConfigs_.WriteTo(output, _repeated_levelConfigs_codec);
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (Error != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(Error);
+      }
+      if (Message.Length != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(Message);
+      }
+      size += levelConfigs_.CalculateSize(_repeated_levelConfigs_codec);
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      rpcId_ = 0;
+      error_ = 0;
+      message_ = "";
+      for (int i = 0; i < levelConfigs_.Count; i++) { MessagePool.Instance.Recycle(levelConfigs_[i]); }
+      levelConfigs_.Clear();
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+          case 728: {
+            Error = input.ReadInt32();
+            break;
+          }
+          case 738: {
+            Message = input.ReadString();
+            break;
+          }
+          case 746: {
+            levelConfigs_.AddEntriesFrom(input, _repeated_levelConfigs_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   #endregion
 
 }

@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------
+//------------------------------------------------------------
 // Game Framework
 // Copyright © 2013-2020 Jiang Yin. All rights reserved.
 // Homepage: https://gameframework.cn/
@@ -133,7 +133,7 @@ namespace Flower
             DescriptionId = columnStrings[index++];
             SceneId = int.Parse(columnStrings[index++]);
             ResourceGroupName = columnStrings[index++];
-            InitEnergy = int.Parse(columnStrings[index++]);
+            InitEnergy = int.Parse(columnStrings[index++]);            
             PlayerPosition = DataTableExtension.ParseVector3(columnStrings[index++]);
             PlayerQuaternion = DataTableExtension.ParseVector3(columnStrings[index++]);
                 WaveIds = DataTableExtension.ParseInt32Array(columnStrings[index++]);

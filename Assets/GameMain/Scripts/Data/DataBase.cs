@@ -117,7 +117,7 @@ namespace Flower.Data
         protected void LoadDataTable(string dataTableName)
         {
             //TODO bytes to txt read
-            string dataTableAssetName = AssetUtility.GetDataTableAsset(dataTableName, true);
+            string dataTableAssetName = AssetUtility.GetDataTableAsset(dataTableName, false);
             loadedFlag.Add(dataTableAssetName, false);
             GameEntry.DataTable.LoadDataTable(dataTableName, dataTableAssetName, this);
         }

@@ -23,7 +23,7 @@ namespace Flower
         {
             get
             {
-                return 10013;
+                return 10001;
             }
         }
 
@@ -40,7 +40,7 @@ namespace Flower
         {
             get
             {
-                return 10014;
+                return 10002;
             }
         }
 
@@ -57,7 +57,7 @@ namespace Flower
         {
             get
             {
-                return 10001;
+                return 10003;
             }
         }
         
@@ -74,7 +74,7 @@ namespace Flower
         {
             get
             {
-                return 10002;
+                return 10004;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Flower
         {
             get
             {
-                return 10003;
+                return 10005;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Flower
         {
             get
             {
-                return 10004;
+                return 10006;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Flower
         {
             get
             {
-                return 10011;
+                return 10022;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Flower
         {
             get
             {
-                return 10012;
+                return 10023;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Flower
         {
             get
             {
-                return 10005;
+                return 10007;
             }
         }
 
@@ -170,7 +170,7 @@ namespace Flower
         {
             get
             {
-                return 10006;
+                return 10008;
             }
         }
 
@@ -186,7 +186,7 @@ namespace Flower
         {
             get
             {
-                return 10007;
+                return 10009;
             }
         }
 
@@ -202,7 +202,7 @@ namespace Flower
         {
             get
             {
-                return 10008;
+                return 100010;
             }
         }
 
@@ -218,7 +218,7 @@ namespace Flower
         {
             get
             {
-                return 10009;
+                return 100011;
             }
         }
 
@@ -234,7 +234,7 @@ namespace Flower
         {
             get
             {
-                return 10010;
+                return 10012;
             }
         }
 
@@ -243,6 +243,22 @@ namespace Flower
 
         }
     }
+
+    public partial class R2C_LevelConfig : SCPacketBase
+    {
+        public override int Id
+        {
+            get
+            {
+                return 10014;
+            }
+        }
+
+        public override void Clear()
+        {
+
+        }
+    }   
 
 
 }

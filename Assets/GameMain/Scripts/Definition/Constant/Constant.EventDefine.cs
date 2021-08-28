@@ -11,6 +11,7 @@ namespace Flower
             public const int ConnectGateServer = 10001;
             public const int RegisterNotify = 10002;
             public const int LoginGateSuccessNotify = 10003;
+            public const int LevelConfigNotify = 10004;
         }
     }
 }

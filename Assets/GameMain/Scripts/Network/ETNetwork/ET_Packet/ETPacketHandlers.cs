@@ -20,7 +20,7 @@ namespace Flower
         {
             get
             {
-                return 10014;
+                return 10002;
             }
         }
 
@@ -48,7 +48,7 @@ namespace Flower
         {
             get
             {
-                return 10002;
+                return 10004;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Flower
         {
             get
             {
-                return 10004;
+                return 10006;
             }
         }
 
@@ -101,7 +101,7 @@ namespace Flower
         {
             get
             {
-                return 10005;
+                return 10007;
             }
         }
 
@@ -113,6 +113,38 @@ namespace Flower
                 Debug.Log(string.Format("Message:{0},Id:{1}", result.Info, result.Id));
             }
         }
+    }
+
+    public partial class R2C_LevelConfigHandler : PacketHandlerBase
+    {
+        public override int Id
+        {
+            get
+            {
+                return 10014;
+            }
+        }
+
+        R2C_LevelConfig r2c_LevelConfig;
+        public override void Handle(object sender, Packet packet)
+        {
+            Debug.Log("Get Message From the Server R2C_LevelConfigHandler");
+            R2C_LevelConfig loginResult = packet as R2C_LevelConfig;
+            if (loginResult != null)
+            {
+                //Debug.Log(string.Format("Message Content-> Address:{0}, Key->{1} ", loginResult.Address, loginResult.Key));
+            }
+            r2c_LevelConfig = loginResult;
+            //NetworkComponent network = MGame.GameEntry.Network;
+            //INetworkChannelHelper helper = new ET_NetworkChannelHelper();
+            //INetworkChannel nc = network.CreateNetworkChannel("CG_TC", helper);
+            //nc.HeartBeatInterval = 0f;
+
+            //IPEndPoint ipPoint = NetworkHelper.ToIPEndPoint(loginResult.Address);
+            //nc.Connect(ipPoint.Address, ipPoint.Port,r2c_Login);
+            GameEntry.Event.Fire(r2c_LevelConfig, new MGameEvetArgs(Constant.EventDefine.LevelConfigNotify));
+        }
+
     }
 
 
