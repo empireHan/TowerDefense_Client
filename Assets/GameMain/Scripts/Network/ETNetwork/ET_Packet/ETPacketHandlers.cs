@@ -142,6 +142,7 @@ namespace Flower
 
             //IPEndPoint ipPoint = NetworkHelper.ToIPEndPoint(loginResult.Address);
             //nc.Connect(ipPoint.Address, ipPoint.Port,r2c_Login);
+            Debug.Log("Get Message From the Server R2C_LevelConfigHandler11111111111111");
             GameEntry.Event.Fire(r2c_LevelConfig, new MGameEvetArgs(Constant.EventDefine.LevelConfigNotify));
         }
 

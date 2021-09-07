@@ -120,10 +120,14 @@ namespace Flower
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
+            //string splitBySX = "";
             for (int i = 0; i < columnStrings.Length; i++)
             {
                 columnStrings[i] = columnStrings[i].Trim(DataTableExtension.DataTrimSeparators);
+                //splitBySX += columnStrings[i];
+                //splitBySX += "|";
             }
+            //Debug.Log(splitBySX);
 
             int index = 0;
             index++;

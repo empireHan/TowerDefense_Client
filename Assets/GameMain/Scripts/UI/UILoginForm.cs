@@ -35,6 +35,8 @@ namespace Flower
 
             GameEntry.Event.Subscribe(Constant.EventDefine.ConnectGateServer, OnConnectGateServer);
 
+            GameEntry.Event.Subscribe(Constant.EventDefine.LevelConfigNotify, OnLevelConfigNotify);
+
             GameEntry.Event.Subscribe(Constant.EventDefine.RegisterNotify, OnRegisterNotify);
 
             GameEntry.Event.Subscribe(Constant.EventDefine.LoginGateSuccessNotify, OnLoginGateSuccess);
@@ -50,6 +52,7 @@ namespace Flower
 
             GameEntry.Event.Unsubscribe(UnityGameFramework.Runtime.NetworkConnectedEventArgs.EventId, OnConnected);
             GameEntry.Event.Unsubscribe(Constant.EventDefine.ConnectGateServer, OnConnectGateServer);
+            GameEntry.Event.Unsubscribe(Constant.EventDefine.LevelConfigNotify, OnLevelConfigNotify);
             GameEntry.Event.Unsubscribe(Constant.EventDefine.RegisterNotify, OnRegisterNotify);
             GameEntry.Event.Unsubscribe(Constant.EventDefine.LoginGateSuccessNotify, OnLoginGateSuccess);
         }
@@ -112,6 +115,17 @@ namespace Flower
             nc.Connect(ipPoint.Address, ipPoint.Port, loginResult);
         }
 
+        void OnLevelConfigNotify(object sender, EventArgs e)
+        {
+            Debug.LogError("recv from server LevelConfig Data~~~~~~~~~~~~~");
+            R2C_LevelConfig levelConfigResult = sender as R2C_LevelConfig;
+            foreach(LevelConfig lc in levelConfigResult.LevelConfigs)
+            {
+                Debug.LogError("recv from server LevelConfig Data:" + lc.Config);
+            }
+            
+        }
+
         void OnRegisterNotify(object sender,EventArgs e)
         {
             R2C_Register registerResult = sender as R2C_Register;
@@ -131,7 +145,7 @@ namespace Flower
         {
             G2C_LoginGate loginGate = sender as G2C_LoginGate;
             //跳转UI   
-            GameEntry.Event.Fire(this, ChangeSceneEventArgs.Create(GameEntry.Config.GetInt("Scene.Menu")));
+            //GameEntry.Event.Fire(this, ChangeSceneEventArgs.Create(GameEntry.Config.GetInt("Scene.Menu")));
         }
 
         private void OnRegisterButtonClick()
