@@ -123,8 +123,8 @@ namespace Flower
             //string splitBySX = "";
             for (int i = 0; i < columnStrings.Length; i++)
             {
-                columnStrings[i] = columnStrings[i].Trim(DataTableExtension.DataTrimSeparators);
                 //splitBySX += columnStrings[i];
+                columnStrings[i] = columnStrings[i].Trim(DataTableExtension.DataTrimSeparators);                
                 //splitBySX += "|";
             }
             //Debug.Log(splitBySX);

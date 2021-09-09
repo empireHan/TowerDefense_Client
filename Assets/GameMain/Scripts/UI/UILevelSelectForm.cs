@@ -42,6 +42,7 @@ namespace Flower
         private void ShowLevelSelectionButtonItems()
         {
             LevelData[] levelDatas = GameEntry.Data.GetData<DataLevel>().GetAllLevelData();
+            Debug.LogError($"levelDatas count: { levelDatas.Length}");
             foreach (var levelData in levelDatas)
             {
                 ShowItem<ItemLevelSelectionButton>(EnumItem.LevelSelectionButton, (item) =>

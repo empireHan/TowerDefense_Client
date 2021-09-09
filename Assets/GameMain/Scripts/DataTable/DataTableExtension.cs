@@ -48,6 +48,61 @@ namespace Flower
             dataTable.ReadData(dataTableAssetName, Constant.AssetPriority.DataTableAsset, userData);
         }
 
+        //TODO 创建DataTable
+        public static void CreateDataTable(this DataTableComponent dataTableComponent, string dataTableName)
+        {
+            if (string.IsNullOrEmpty(dataTableName))
+            {
+                Log.Warning("Data table name is invalid.");
+                return;
+            }
+
+            string[] splitedNames = dataTableName.Split('_');
+            if (splitedNames.Length > 2)
+            {
+                Log.Warning("Data table name is invalid.");
+                return;
+            }
+
+            string dataRowClassName = DataRowClassPrefixName + splitedNames[0];
+            Type dataRowType = Type.GetType(dataRowClassName);
+            if (dataRowType == null)
+            {
+                Log.Warning("Can not get data row type with class name '{0}'.", dataRowClassName);
+                return;
+            }
+
+            string name = splitedNames.Length > 1 ? splitedNames[1] : null;
+            dataTableComponent.CreateDataTable(dataRowType, name);
+        }
+
+        public static DataTableBase GetDataTable(this DataTableComponent dataTableComponent, string dataTableName)
+        {
+            if (string.IsNullOrEmpty(dataTableName))
+            {
+                Log.Warning("Data table name is invalid.");
+                return null;
+            }
+
+            string[] splitedNames = dataTableName.Split('_');
+            if (splitedNames.Length > 2)
+            {
+                Log.Warning("Data table name is invalid.");
+                return null;
+            }
+
+            string dataRowClassName = DataRowClassPrefixName + splitedNames[0];
+            Type dataRowType = Type.GetType(dataRowClassName);
+            if (dataRowType == null)
+            {
+                Log.Warning("Can not get data row type with class name '{0}'.", dataRowClassName);
+                return null;
+            }
+
+            string name = splitedNames.Length > 1 ? splitedNames[1] : null;
+            return dataTableComponent.GetDataTable(dataRowType, name);
+        }
+
         public static Color32 ParseColor32(string value)
         {
             string[] splitValue = value.Split(',');

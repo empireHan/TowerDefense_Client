@@ -122,6 +122,14 @@ namespace Flower.Data
             GameEntry.DataTable.LoadDataTable(dataTableName, dataTableAssetName, this);
         }
 
+        //TODO 创建该类型DataTable 而不初始化数据，由服务端传回数据并初始化
+        protected void CreateDataTable(string dataTableName)
+        {
+            string dataTableAssetName = AssetUtility.GetDataTableAsset(dataTableName, false);
+            loadedFlag.Add(dataTableAssetName, true);   //TODO 无需等待数据加载就可以显示登录UI  由其他逻辑控制是否参数加载完成
+            GameEntry.DataTable.CreateDataTable(dataTableName);
+        }
+
         protected void LoadDictionary(string dictionaryName)
         {
             string dictionaryAssetName = AssetUtility.GetDictionaryAsset(dictionaryName, false);

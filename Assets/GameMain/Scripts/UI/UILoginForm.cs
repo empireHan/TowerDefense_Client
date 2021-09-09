@@ -1,3 +1,5 @@
+using Flower.Data;
+using GameFramework.DataTable;
 using GameFramework.Network;
 using System;
 using System.Collections;
@@ -117,13 +119,21 @@ namespace Flower
 
         void OnLevelConfigNotify(object sender, EventArgs e)
         {
+#if DATA_FROM_SERVER
             Debug.LogError("recv from server LevelConfig Data~~~~~~~~~~~~~");
             R2C_LevelConfig levelConfigResult = sender as R2C_LevelConfig;
-            foreach(LevelConfig lc in levelConfigResult.LevelConfigs)
+            DataTableBase dataTableBase = GameEntry.DataTable.GetDataTable("Level");
+            foreach (LevelConfig lc in levelConfigResult.LevelConfigs)
             {
-                Debug.LogError("recv from server LevelConfig Data:" + lc.Config);
+                string data = lc.Config.Replace('|', '\t');
+                dataTableBase.ParseData(data);
+                //Debug.LogError("recv from server LevelConfig Data:" + lc.Config);
             }
-            
+            //网络数据解析后，DataLevel初始化
+            GameEntry.Data.GetData<DataLevel>().initData();
+            //跳转UI   
+            GameEntry.Event.Fire(this, ChangeSceneEventArgs.Create(GameEntry.Config.GetInt("Scene.Menu")));
+#endif
         }
 
         void OnRegisterNotify(object sender,EventArgs e)
@@ -143,7 +153,7 @@ namespace Flower
 
         void OnLoginGateSuccess(object sender, EventArgs e)
         {
-            G2C_LoginGate loginGate = sender as G2C_LoginGate;
+            //G2C_LoginGate loginGate = sender as G2C_LoginGate;
             //跳转UI   
             //GameEntry.Event.Fire(this, ChangeSceneEventArgs.Create(GameEntry.Config.GetInt("Scene.Menu")));
         }

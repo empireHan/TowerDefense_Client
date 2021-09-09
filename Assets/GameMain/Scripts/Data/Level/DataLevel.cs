@@ -60,10 +60,62 @@ namespace Flower.Data
 
         protected override void OnPreload()
         {
+#if !DATA_FROM_SERVER
             LoadDataTable("Level");
+#else
+            CreateDataTable("Level");
+#endif
         }
 
         protected override void OnLoad()
+        {
+#if !DATA_FROM_SERVER
+            MaxLevel = 0;
+
+            dtLevel = GameEntry.DataTable.GetDataTable<DRLevel>();
+            if (dtLevel == null)
+                throw new System.Exception("Can not get data table Level");
+
+            dicLevelData = new Dictionary<int, LevelData>();
+
+            DataWave dataWave = GameEntry.Data.GetData<DataWave>();
+            if (dataWave == null)
+                throw new System.Exception("Can not get data 'DataWave'");
+
+            DRLevel[] dRLevels = dtLevel.GetAllDataRows();
+            foreach (var dRLevel in dRLevels)
+            {
+                SceneData sceneData = GameEntry.Data.GetData<DataScene>().GetSceneData(dRLevel.SceneId);
+
+                int[] waveIds = dRLevel.WaveIds;
+                WaveData[] waveDatas = new WaveData[waveIds.Length];
+                for (int i = 0; i < waveIds.Length; i++)
+                {
+                    WaveData waveData = dataWave.GetWaveData(waveIds[i]);
+                    if (waveData == null)
+                        throw new System.Exception("Can not find Wave Data id :" + waveIds[i]);
+
+                    waveDatas[i] = waveData;
+                }
+
+                LevelData levelData = new LevelData(dRLevel, waveDatas, sceneData);
+                dicLevelData.Add(dRLevel.Id, levelData);
+
+                if (dRLevel.Id > MaxLevel)
+                    MaxLevel = dRLevel.Id;
+            }
+
+            //
+            starScore = new int[3];
+            starScore[0] = GameEntry.Config.GetInt(Constant.Config.LevelStar1);
+            starScore[1] = GameEntry.Config.GetInt(Constant.Config.LevelStar2);
+            starScore[2] = GameEntry.Config.GetInt(Constant.Config.LevelStar3);
+            
+#endif
+            Subscribe(LoadLevelFinishEventArgs.EventId, OnLoadLevelFinfish);
+        }
+
+        public void initData()
         {
             MaxLevel = 0;
 
@@ -105,8 +157,6 @@ namespace Flower.Data
             starScore[0] = GameEntry.Config.GetInt(Constant.Config.LevelStar1);
             starScore[1] = GameEntry.Config.GetInt(Constant.Config.LevelStar2);
             starScore[2] = GameEntry.Config.GetInt(Constant.Config.LevelStar3);
-
-            Subscribe(LoadLevelFinishEventArgs.EventId, OnLoadLevelFinfish);
         }
 
         public LevelData GetLevelData(int id)
